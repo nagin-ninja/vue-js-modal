@@ -56,6 +56,7 @@ import {
   getTouchEvent,
   blurActiveElement,
   windowWidthWithoutScrollbar,
+  windowWidthWithScrollbar,
   stringStylesToObject
 } from '../utils'
 import { parseNumber, validateNumber } from '../utils/parser'
@@ -168,7 +169,11 @@ export default {
       validator(value) {
         return value >= 0 && value <= 1
       }
-    }
+    },
+    reserveScrollBarGap: {
+      type: Boolean,
+      default: true,
+    },
   },
   components: {
     Resizer
@@ -522,7 +527,11 @@ export default {
     },
 
     onWindowResize() {
-      this.viewportWidth = windowWidthWithoutScrollbar()
+      if (this.reserveScrollBarGap) {
+        this.viewportWidth = windowWidthWithoutScrollbar()
+      } else {
+        this.viewportWidth = windowWidthWithScrollbar()
+      }
       this.viewportHeight = window.innerHeight
 
       this.ensureShiftInWindowBounds()

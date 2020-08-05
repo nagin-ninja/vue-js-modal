@@ -42,6 +42,16 @@ export const windowWidthWithoutScrollbar = () => {
 
   return clientWidth || innerWidth
 }
+export const windowWidthWithScrollbar = () => {
+  const { innerWidth } = window
+  const { clientWidth } = document.documentElement
+
+  if (innerWidth && clientWidth) {
+    return Math.max(innerWidth, clientWidth)
+  }
+
+  return clientWidth || innerWidth
+}
 
 export const stringStylesToObject = styles => {
   const lines = styles
